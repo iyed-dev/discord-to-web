@@ -18,9 +18,9 @@ Ce projet permet aux utilisateurs de gagner des points en regardant des publicit
 ## Installation
 
 1. Clonez ce repository :
-   ```bash
-   git clone https://github.com/iyed-dev/discord-to-web.git
-   ```
+```bash
+git clone https://github.com/iyed-dev/discord-to-web.git
+```
 2. Installez les dépendances :
 ```bash
 npm install
