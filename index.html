@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicité</title>
+</head>
+<body>
+    <h1>Publicité</h1>
+    <video id="ad-video" width="640" height="360" controls>
+        <source id="ad-source" type="video/mp4">
+        Ton navigateur ne supporte pas la lecture de vidéos.
+    </video>
+    <button id="confirmBtn">J’ai regardé</button>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user');
+        const adId = urlParams.get('adId');
+
+        if (adId && userId) {
+            fetch(`http://localhost:3000/ads`)
+                .then(response => response.json())
+                .then(ads => {
+                    const ad = ads.find(a => a.id == adId);
+                    if (ad) {
+                        document.getElementById("ad-source").src = `http://localhost:3000/${ad.source}`;
+                        document.getElementById("ad-video").load();
+                    } else {
+                        alert("Publicité non trouvée.");
+                    }
+                });
+
+            document.getElementById("confirmBtn").addEventListener("click", () => {
+                fetch(`http://localhost:3000/add-points?user=${userId}&adId=${adId}`)
+                    .then(response => response.text())
+                    .then(data => alert(data));
+            });
+        } else {
+            alert("ID utilisateur ou publicité manquant.");
+        }
+    </script>
+</body>
+</html>
